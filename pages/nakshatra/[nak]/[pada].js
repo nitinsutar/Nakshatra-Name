@@ -66,56 +66,6 @@ export default function NakPage({ nak, pada, syllable, sample }) {
 
   const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL || ''}/og/${nak.slug}.svg`
 
-// --- Structured data (JSON-LD) for SEO ------------------
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
-// Build ItemList with enriched schema for default syllable sample
-const itemListElements = (sample || []).slice(0, 20).map((s, idx) => {
-  return {
-    "@type": "ListItem",
-    "position": idx + 1,
-    "item": {
-      "@type": "Person",
-      "name": s.name,
-      "alternateName": s.alternateName || '',
-      "gender": s.gender || 'Any',
-      "description": s.meaning || '',
-      "inLanguage": (s.language && s.language[0]) || 'hi',
-      "additionalType": "https://schema.org/GivenName",
-      "sameAs": s.sameAs || []
-    }
-  }
-})
-
-const pagePath = `${siteUrl}/nakshatra/${nak.slug}/pada-${pada}`
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "name": `${nak.name} — Pada ${pada} (${syllable}) — Nakshatra Baby Names`,
-  "description": `Curated baby names starting with ${syllable} for ${nak.name} (Pada ${pada}).`,
-  "url": pagePath,
-  "numberOfItems": itemListElements.length,
-  "itemListElement": itemListElements
-}
-
-// FAQ structured data
-},
-    {
-      "@type": "Question",
-      "name": "What is a Pada?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "A pada is a quarter of a Nakshatra; it refines the syllable for naming and can slightly change the recommended starting sound."
-      }
-    }
-  ]
-}
-
-const descFaqs = (descriptions && descriptions[nak.slug] && descriptions[nak.slug].faqs) || []
-}))
-}
-
-const ldJson = JSON.stringify(jsonLd)
-const ldFaq = JSON.stringify(faqJson)
 
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
