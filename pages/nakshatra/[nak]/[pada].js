@@ -98,18 +98,7 @@ const jsonLd = {
 }
 
 // FAQ structured data
-const faqJson = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How are Nakshatras calculated?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Nakshatras divide the 360° ecliptic into 27 equal parts (13.333° each). The Moon's longitude at birth determines the Nakshatra. Each Nakshatra is further split into 4 padas (~3.333° each) which map to naming syllables."
-      }
-    },
+},
     {
       "@type": "Question",
       "name": "What is a Pada?",
@@ -122,10 +111,7 @@ const faqJson = {
 }
 
 const descFaqs = (descriptions && descriptions[nak.slug] && descriptions[nak.slug].faqs) || []
-const faqJson = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": descFaqs.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
+}))
 }
 
 const ldJson = JSON.stringify(jsonLd)
@@ -157,18 +143,7 @@ const jsonLd = {
 }
 
 // FAQ structured data (educational)
-const faqJson = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How are Nakshatras calculated?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Nakshatras divide the 360° ecliptic into 27 equal parts (13.333° each). The Moon's ecliptic longitude at birth determines the Nakshatra. Each Nakshatra is further split into 4 padas (~3.333° each) which map to naming syllables."
-      }
-    },
+},
     {
       "@type": "Question",
       "name": "What is a Pada?",
@@ -215,18 +190,7 @@ const jsonLd = {
 }
 
 // FAQ structured data (educational)
-const faqJson = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How are Nakshatras calculated?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Nakshatras divide the 360° ecliptic into 27 equal parts (13.333° each). The Moon's ecliptic longitude at birth determines the Nakshatra. Each Nakshatra is further split into 4 padas (~3.333° each) which map to naming syllables."
-      }
-    },
+},
     {
       "@type": "Question",
       "name": "What is a Pada?",
