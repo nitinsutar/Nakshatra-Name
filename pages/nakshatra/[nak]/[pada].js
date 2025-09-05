@@ -1,4 +1,5 @@
 import { NAKSHATRAS } from '../../../lib/nakshatra'
+import Head from 'next/head'
 import Layout from '../../../components/Layout'
 import Link from 'next/link'
 import { useState, useMemo, useEffect } from 'react'
@@ -59,8 +60,68 @@ export default function NakPage({ nak, pada, syllable, sample }) {
 
   const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL || ''}/og/${nak.slug}.svg`
 
+// --- Structured data (JSON-LD) for SEO ------------------
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+// Build ItemList for the default syllable (server-side sample prop is provided)
+const itemListElements = (sample || []).slice(0, 20).map((s, idx) => ({
+  "@type": "ListItem",
+  "position": idx + 1,
+  "item": {
+    "@type": "Person",
+    "name": s.name,
+    "additionalName": s.meaning || '',
+    "gender": s.gender || 'Any'
+  }
+}))
+
+const pagePath = `${siteUrl}/nakshatra/${nak.slug}/pada-${pada}`
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `${nak.name} — Pada ${pada} (${syllable}) — Nakshatra Baby Names`,
+  "description": `Curated baby names starting with ${syllable} for ${nak.name} (Pada ${pada}).`,
+  "url": pagePath,
+  "numberOfItems": itemListElements.length,
+  "itemListElement": itemListElements
+}
+
+// FAQ structured data (educational)
+const faqJson = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How are Nakshatras calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nakshatras divide the 360° ecliptic into 27 equal parts (13.333° each). The Moon's ecliptic longitude at birth determines the Nakshatra. Each Nakshatra is further split into 4 padas (~3.333° each) which map to naming syllables."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a Pada?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A pada is a quarter of a Nakshatra; it refines the syllable for naming and can slightly change the recommended starting sound."
+      }
+    }
+  ]
+}
+
+const ldJson = JSON.stringify(jsonLd)
+const ldFaq = JSON.stringify(faqJson)
+
   return (
     <Layout title={`${nak.name} — Pada ${pada} (${selectedSyl})`} description={`${nak.name} nakshatra pada ${pada} syllable ${selectedSyl} — curated baby names`} image={ogImage}>
+<Head>
+  {/* Canonical URL */}
+  <link rel="canonical" href={`${process.env.NEXT_PUBLIC_SITE_URL || ''}/nakshatra/${nak.slug}/pada-${pada}`} />
+  {/* Per-page structured data */}
+  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldJson }} />
+  <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ldFaq }} />
+</Head>
+
       <p><Link href='/'><a style={{color:'#0b74de'}}>← All Nakshatras</a></Link></p>
       <h1 style={{fontSize:36}}>{nak.name} <span style={{color:'#666',fontSize:20}}>({nak.devanagari})</span></h1>
       <p className="small">{nak.description}</p>
