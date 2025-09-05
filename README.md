@@ -1,29 +1,34 @@
 # nakshatra-name-tool
 
-Next.js app scaffold for Nakshatra → syllable → baby-name tool (SEO-first).
+This version displays a clean catalog of all Nakshatras and their 4 padas.
+Each pada shows the recommended syllable and an initial starter dataset of example names.
+
+## Features
+- SEO-first: static pages for each Nakshatra + Pada (108 pages).
+- Starter names dataset generated from syllables (editable in `lib/names.js`).
+- Clean, modern UI (mobile friendly) with simple card grid and detail pages.
 
 ## Quick start
-
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
-2. Local dev:
+2. Run development server:
+
 ```bash
 npm run dev
 ```
 
-3. Build:
+3. Build for production:
+
 ```bash
 npm run build
 ```
 
-## Vercel deployment notes
-
-- Framework Preset: **Next.js**
-- Build command: `npm run build`
-- Output directory: `.next`
-- Ensure `package.json` with `next` is in repository root (it is).
-- Set environment variables in Vercel (from `.env.example`)
+## Next steps / Improvements
+- Replace starter name seeds with curated lists and meanings.
+- Add filters (gender, modern/traditional), scripts (Devanagari) and audio pronunciation.
+- Hook an AI name generator for premium suggestions.
 

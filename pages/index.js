@@ -1,50 +1,32 @@
-import { useState } from 'react'
+import Link from 'next/link'
 import Layout from '../components/Layout'
-import NameSuggestions from '../components/NameSuggestions'
+import { NAKSHATRAS } from '../lib/nakshatra'
 
 export default function Home(){
-  const [form, setForm] = useState({ date:'', time:'', tz:'Asia/Kolkata', place:'Mumbai' })
-  const [result, setResult] = useState(null)
-  const [loading, setLoading] = useState(false)
-
-  async function submit(e){
-    e.preventDefault()
-    setLoading(true)
-    const res = await fetch('/api/compute', {
-      method:'POST', headers:{'content-type':'application/json'},
-      body: JSON.stringify(form)
-    })
-    const json = await res.json()
-    setResult(json)
-    setLoading(false)
-  }
-
   return (
     <Layout>
-      <h1>Nakshatra Name Tool</h1>
-      <p>Enter birth details to compute the Nakshatra, Pada and suggested syllable.</p>
-      <form onSubmit={submit} style={{display:'grid',gap:8,maxWidth:420}}>
-        <input required placeholder="YYYY-MM-DD" value={form.date} onChange={e=>setForm({...form,date:e.target.value})} />
-        <input required placeholder="HH:MM (24h)" value={form.time} onChange={e=>setForm({...form,time:e.target.value})} />
-        <input placeholder="Place (city)" value={form.place} onChange={e=>setForm({...form,place:e.target.value})} />
-        <button type="submit" disabled={loading}>{loading? 'Computing...':'Compute syllable'}</button>
-      </form>
-
-      {result && (
-        <div style={{marginTop:20}}>
-          { result.error ? (
-            <div style={{color:'red'}}>Error: {result.error}. See README to configure ASTRO_API.</div>
-          ) : (
-            <div>
-              <h2>{result.nakshatraName} — Pada {result.pada+1}</h2>
-              <p>Syllable: <strong>{result.syllable}</strong></p>
-              <p>Moon longitude: {result.moon_longitude}°</p>
-            </div>
-          )}
+      <header style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+        <div>
+          <h1 style={{fontSize:48,margin:0}}>Nakshatra Name Tool</h1>
+          <p style={{color:'#555',marginTop:8}}>Explore all Nakshatras, their 4 padas, the recommended syllables and starter name lists.</p>
         </div>
-      )}
+      </header>
 
-      {result?.syllable && <NameSuggestions syllable={result.syllable} />}
+      <section style={{marginTop:28}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:16}}>
+          {NAKSHATRAS.map(n => (
+            <Link key={n.slug} href={`/nakshatra/${n.slug}/pada-1`}>
+              <a style={{display:'block',padding:16,borderRadius:8,background:'#fff',boxShadow:'0 6px 18px rgba(16,24,40,0.06)',textDecoration:'none',color:'#111'}}>
+                <h3 style={{margin:'0 0 6px 0'}}>{n.name}</h3>
+                <div style={{color:'#666',fontSize:13}}>{n.devanagari}</div>
+                <div style={{marginTop:10,fontSize:13,color:'#333'}}>{n.description}</div>
+                <div style={{marginTop:12,fontSize:13,color:'#0b74de'}}>{n.syllables.join(' · ')}</div>
+              </a>
+            </Link>
+          ))}
+        </div>
+      </section>
+
     </Layout>
   )
 }
