@@ -5,6 +5,12 @@ import Link from 'next/link'
 import { useState, useMemo, useEffect } from 'react'
 import SyllableSelector from '../../../components/SyllableSelector'
 import NAMES from '../../../lib/names'
+import NakshatraDescription from '../../../components/NakshatraDescription'
+import descriptions from '../../../lib/nakshatra_descriptions'
+import AccordionFAQ from '../../../components/AccordionFAQ'
+import TraitCard from '../../../components/TraitCard'
+import Breadcrumbs from '../../../components/Breadcrumbs'
+import Accordion from '../../../components/Accordion'
 
 export async function getStaticPaths(){
   const paths = []
@@ -113,6 +119,13 @@ const faqJson = {
       }
     }
   ]
+}
+
+const descFaqs = (descriptions && descriptions[nak.slug] && descriptions[nak.slug].faqs) || []
+const faqJson = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": descFaqs.map(f => ({ "@type": "Question", "name": f.q, "acceptedAnswer": { "@type": "Answer", "text": f.a } }))
 }
 
 const ldJson = JSON.stringify(jsonLd)
@@ -239,8 +252,27 @@ const ldFaq = JSON.stringify(faqJson)
 </Head>
 
       <p><Link href='/'><a style={{color:'#0b74de'}}>← All Nakshatras</a></Link></p>
+      <Breadcrumbs items={[{label:'Home', href:'/'},{label:nak.name}]} />
       <h1 style={{fontSize:36}}>{nak.name} <span style={{color:'#666',fontSize:20}}>({nak.devanagari})</span></h1>
-      <p className="small">{nak.description}</p>
+      <p className="small">
+<section className="nakshatra-info" style={{marginTop:18}}>
+  <p style={{fontSize:16,color:'#334155',maxWidth:860,lineHeight:1.7}}>
+    {nak.name} ({nak.devanagari}) is known for {nak.description.toLowerCase()}. People born under this Nakshatra often show traits such as creativity, steadiness and a strong sense of family; traditional naming by pada assigns an auspicious syllable to guide given names.
+  </p>
+
+  <div className="traits-grid">
+    <TraitCard label="Symbol" value="Cart / Chariot" />
+    <TraitCard label="Ruling Deity" value="Prajapati" />
+    <TraitCard label="Ruling Planet" value="Moon" />
+    <TraitCard label="Element" value="Earth" />
+  </div>
+
+  <div style={{marginTop:18}}>
+    <h3 style={{marginBottom:8}}>Naming tradition</h3>
+    <p className="small">Each Nakshatra is divided into four padas which map to starting syllables for a child’s name — a practice rooted in Vedic naming customs. Use the syllable selector below to preview curated names for each starting sound.</p>
+  </div>
+</section>
+{nak.description}</p>
 
       <SyllableSelector syllables={nak.syllables} selected={selectedSyl} onSelect={handleSelectSyl} />
 
@@ -286,9 +318,18 @@ const ldFaq = JSON.stringify(faqJson)
         {filtered.length===0 && <div className="empty-note">No names found with current filters.</div>}
       </ul>
 
+      <div style={{marginTop:26}}>
+        <h3>Frequently asked questions</h3>
+        <AccordionFAQ items={[{ q: 'How are Nakshatras calculated?', a: 'Nakshatras divide the 360° ecliptic into 27 equal parts (13.333° each). The Moon\'s longitude at birth determines the Nakshatra.' },{ q: 'What is a Pada?', a: 'A pada is a quarter of a Nakshatra; it refines the syllable for naming and can slightly change the recommended starting sound.' }]} />
+      </div>
+
       <div className="note">
         <strong>About calculations:</strong> Each Nakshatra is 13.33° and each pada ~3.33°. Syllables are assigned per traditional lists; where multiple regional variants exist we show the most common transliteration.
       </div>
+
+      <NakshatraDescription slug={nak.slug} nak={nak} />
+
+
 
     </Layout>
   )
