@@ -62,6 +62,64 @@ export default function NakPage({ nak, pada, syllable, sample }) {
 
 // --- Structured data (JSON-LD) for SEO ------------------
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+// Build ItemList with enriched schema for default syllable sample
+const itemListElements = (sample || []).slice(0, 20).map((s, idx) => {
+  return {
+    "@type": "ListItem",
+    "position": idx + 1,
+    "item": {
+      "@type": "Person",
+      "name": s.name,
+      "alternateName": s.alternateName || '',
+      "gender": s.gender || 'Any',
+      "description": s.meaning || '',
+      "inLanguage": (s.language && s.language[0]) || 'hi',
+      "additionalType": "https://schema.org/GivenName",
+      "sameAs": s.sameAs || []
+    }
+  }
+})
+
+const pagePath = `${siteUrl}/nakshatra/${nak.slug}/pada-${pada}`
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `${nak.name} — Pada ${pada} (${syllable}) — Nakshatra Baby Names`,
+  "description": `Curated baby names starting with ${syllable} for ${nak.name} (Pada ${pada}).`,
+  "url": pagePath,
+  "numberOfItems": itemListElements.length,
+  "itemListElement": itemListElements
+}
+
+// FAQ structured data
+const faqJson = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How are Nakshatras calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nakshatras divide the 360° ecliptic into 27 equal parts (13.333° each). The Moon's longitude at birth determines the Nakshatra. Each Nakshatra is further split into 4 padas (~3.333° each) which map to naming syllables."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a Pada?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A pada is a quarter of a Nakshatra; it refines the syllable for naming and can slightly change the recommended starting sound."
+      }
+    }
+  ]
+}
+
+const ldJson = JSON.stringify(jsonLd)
+const ldFaq = JSON.stringify(faqJson)
+
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
 // Build ItemList for the default syllable (server-side sample prop is provided)
 const itemListElements = (sample || []).slice(0, 20).map((s, idx) => ({
   "@type": "ListItem",
@@ -73,6 +131,64 @@ const itemListElements = (sample || []).slice(0, 20).map((s, idx) => ({
     "gender": s.gender || 'Any'
   }
 }))
+
+const pagePath = `${siteUrl}/nakshatra/${nak.slug}/pada-${pada}`
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": `${nak.name} — Pada ${pada} (${syllable}) — Nakshatra Baby Names`,
+  "description": `Curated baby names starting with ${syllable} for ${nak.name} (Pada ${pada}).`,
+  "url": pagePath,
+  "numberOfItems": itemListElements.length,
+  "itemListElement": itemListElements
+}
+
+// FAQ structured data (educational)
+const faqJson = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How are Nakshatras calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nakshatras divide the 360° ecliptic into 27 equal parts (13.333° each). The Moon's ecliptic longitude at birth determines the Nakshatra. Each Nakshatra is further split into 4 padas (~3.333° each) which map to naming syllables."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a Pada?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A pada is a quarter of a Nakshatra; it refines the syllable for naming and can slightly change the recommended starting sound."
+      }
+    }
+  ]
+}
+
+const ldJson = JSON.stringify(jsonLd)
+const ldFaq = JSON.stringify(faqJson)
+
+// --- Structured data (JSON-LD) with richer Person fields --------------
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+const itemListElements = (sample || []).slice(0, 50).map((s, idx) => {
+  const person = {
+    "@type": "Person",
+    "name": s.name,
+    "gender": s.gender || 'Any',
+    "description": s.meaning || '',
+    "additionalName": s.alternateName || '',
+    "inLanguage": (s.language && s.language[0]) || 'en',
+    "additionalType": "https://schema.org/GivenName",
+    "sameAs": s.sameAs || []
+  }
+  return {
+    "@type": "ListItem",
+    "position": idx + 1,
+    "item": person
+  }
+})
 
 const pagePath = `${siteUrl}/nakshatra/${nak.slug}/pada-${pada}`
 const jsonLd = {
