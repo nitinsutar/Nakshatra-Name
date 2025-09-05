@@ -1,23 +1,52 @@
 :root{
-  --bg:#f8fafc;
+  --bg:#f7f9fb;
   --card:#ffffff;
   --muted:#6b7280;
   --accent:#0b74de;
   --radius:12px;
-  --shadow: 0 10px 30px rgba(2,6,23,0.08);
+  --shadow: 0 8px 24px rgba(12,18,33,0.07);
+  --max-width:1100px;
   font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
-html,body{margin:0;padding:0;background:var(--bg);color:#0f172a}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:#0f172a;-webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
 a{color:var(--accent);text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:40px}
-.header{display:flex;justify-content:space-between;align-items:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease}
-.card:hover{transform:translateY(-6px)}
-.small{font-size:13px;color:var(--muted)}
-.syllable-pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#eef2ff;color:var(--accent);font-weight:600}
+.container{max-width:var(--max-width);margin:0 auto;padding:36px}
+.header{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.header .title { display:flex; flex-direction:column; }
+.header h1{font-size:44px;margin:0;color:#07203a;line-height:1}
+.header p{color:var(--muted);margin-top:8px;font-size:15px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media (max-width:1000px){ .grid{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:640px){ .grid{grid-template-columns:1fr} .header{flex-direction:column;align-items:flex-start} }
+
+.card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease;display:flex;flex-direction:column;min-height:160px;overflow:hidden;border:1px solid rgba(11,116,222,0.04)}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(12,18,33,.09)}
+
+.card h3{margin:0 0 6px 0;font-size:20px;color:#092233}
+.card .dev{color:var(--muted);font-size:13px;margin-bottom:8px}
+.card .desc{color:#2b3440;font-size:14px;margin-top:6px;flex:1}
+
+.syllables{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.syllable-pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#f0f8ff;color:var(--accent);font-weight:600;font-size:13px}
+
+.note{font-size:13px;color:var(--muted);margin-top:18px}
+
 .filters{display:flex;gap:8px;align-items:center;margin-top:12px}
 .filter-select{padding:8px;border-radius:8px;border:1px solid #e6e9ef;background:#fff}
-.name-list{margin-top:12px;padding:0 0 12px 18px}
-.name-item{padding:8px 0;border-bottom:1px dashed #eef2ff}
-.note{font-size:13px;color:var(--muted);margin-top:18px}
+
+.name-list{margin-top:12px;padding:0 0 12px 0;list-style:none}
+.name-item{padding:10px 0;border-bottom:1px dashed #eef4ff;display:flex;flex-direction:column}
+.name-item strong{font-size:16px;color:#07203a}
+.name-meta{font-size:13px;color:var(--muted);margin-top:6px}
+
+.search-input{padding:10px 14px;border-radius:10px;border:1px solid #e6e9ef;min-width:220px}
+
+.empty-note{padding:16px;border-radius:10px;background:#fff;border:1px solid #eee;color:var(--muted)}
+
+/* Ensure links inside cards do not add weird layout or extra elements */
+.card a{display:block;color:inherit}
+.card > a { display:block; width:100%; height:100%; text-decoration:none; color:inherit; }
+/* Reset any unexpected list default spacing in grid */
+.grid a { text-decoration:none; }
