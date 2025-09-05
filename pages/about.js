@@ -2,8 +2,8 @@ import Layout from '../components/Layout'
 
 export default function About(){
   return (
-    <Layout title="About — Nakshatra Name Tool" description="How this tool works and why astrology naming is traditional.">
-      <h1>About Nakshatra Name Tool</h1>
+    <Layout title="About — Nakshatra Baby Names" description="How this tool works and why astrology naming is traditional.">
+      <h1>About Nakshatra Baby Names</h1>
       <p style={{color:'#555'}}>This tool presents the traditional Sanskrit syllables assigned to each Nakshatra pada, and curated Indian name suggestions that start with those syllables.</p>
 
       <h3 style={{marginTop:18}}>Educational notes</h3>

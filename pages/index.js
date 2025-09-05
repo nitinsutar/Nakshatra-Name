@@ -10,7 +10,7 @@ export default function Home(){
     <Layout>
       <div className="header">
         <div className="title">
-          <h1 style={{fontSize:44,margin:0}}>Nakshatra Name Tool</h1>
+          <h1 style={{fontSize:44,margin:0}}>Nakshatra Baby Names</h1>
           <p style={{color:'#555',marginTop:8}}>Explore all Nakshatras, their 4 padas, the recommended syllables and curated name lists.</p>
         </div>
         <div>
