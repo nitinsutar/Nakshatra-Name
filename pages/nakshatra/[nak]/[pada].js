@@ -37,8 +37,10 @@ export default function NakPage({ nak, pada, syllable, sample }) {
     })
   }, [sample, gender, style, maxLength])
 
+  const ogImage = `${process.env.NEXT_PUBLIC_SITE_URL || ''}/og/${nak.slug}.svg`
+
   return (
-    <Layout title={`${nak.name} — Pada ${pada} (${syllable})`} description={`${nak.name} nakshatra pada ${pada} syllable ${syllable} — curated baby names`}>
+    <Layout title={`${nak.name} — Pada ${pada} (${syllable})`} description={`${nak.name} nakshatra pada ${pada} syllable ${syllable} — curated baby names`} image={ogImage}>
       <p><Link href='/'><a style={{color:'#0b74de'}}>← All Nakshatras</a></Link></p>
       <h1 style={{fontSize:36}}>{nak.name} <span style={{color:'#666',fontSize:20}}>({nak.devanagari})</span></h1>
       <p className="small">{nak.description}</p>
@@ -81,11 +83,11 @@ export default function NakPage({ nak, pada, syllable, sample }) {
       <ul className="name-list">
         {filtered.map((s,i)=> (
           <li key={i} className="name-item">
-            <strong>{s.name}</strong> <span className="small"> — {s.gender || 'any'} • {s.style || 'any'}</span>
+            <strong>{s.name}</strong> <div className="name-meta">{s.gender || 'any'} • {s.style || 'any'}</div>
             {s.meaning ? <div className="small">Meaning: {s.meaning}</div> : null}
           </li>
         ))}
-        {filtered.length===0 && <div className="note">No names found with current filters. Try clearing filters.</div>}
+        {filtered.length===0 && <div className="empty-note">No names found with current filters. Try clearing filters.</div>}
       </ul>
 
       <div className="note">

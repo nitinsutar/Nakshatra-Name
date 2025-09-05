@@ -6,7 +6,7 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://your-site.vercel.app'
 const publicDir = path.join(process.cwd(), 'public')
 if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true })
 
-const staticPages = ['/']
+const staticPages = ['/','/about']
 const nakPages = []
 NAKSHATRAS.forEach(n=>{
   for(let p=1;p<=4;p++) nakPages.push(`/nakshatra/${n.slug}/pada-${p}`)

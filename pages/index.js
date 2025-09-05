@@ -9,12 +9,12 @@ export default function Home(){
   return (
     <Layout>
       <div className="header">
-        <div>
-          <h1 style={{fontSize:48,margin:0}}>Nakshatra Name Tool</h1>
+        <div className="title">
+          <h1 style={{fontSize:44,margin:0}}>Nakshatra Name Tool</h1>
           <p style={{color:'#555',marginTop:8}}>Explore all Nakshatras, their 4 padas, the recommended syllables and curated name lists.</p>
         </div>
         <div>
-          <input placeholder="Search nakshatra" value={q} onChange={e=>setQ(e.target.value)} style={{padding:10,borderRadius:8,border:'1px solid #e6e9ef'}} />
+          <input className="search-input" placeholder="Search nakshatra" value={q} onChange={e=>setQ(e.target.value)} />
         </div>
       </div>
 
@@ -23,10 +23,10 @@ export default function Home(){
           {filtered.map(n => (
             <Link key={n.slug} href={`/nakshatra/${n.slug}/pada-1`}>
               <a className="card">
-                <h3 style={{margin:'0 0 6px 0'}}>{n.name}</h3>
-                <div className="small">{n.devanagari}</div>
-                <div style={{marginTop:10,fontSize:13,color:'#333'}}>{n.description}</div>
-                <div style={{marginTop:12,fontSize:13,color:'#0b74de'}}>{n.syllables.join(' · ')}</div>
+                <h3>{n.name}</h3>
+                <div className="dev">{n.devanagari}</div>
+                <div className="desc">{n.description}</div>
+                <div className="syllables">{n.syllables.map(s=> <span className="syllable-pill" key={s}>{s}</span>)}</div>
               </a>
             </Link>
           ))}
