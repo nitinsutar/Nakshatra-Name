@@ -92,21 +92,7 @@ const jsonLd = {
   "itemListElement": itemListElements
 }
 
-// FAQ structured data (educational)
-},
-    {
-      "@type": "Question",
-      "name": "What is a Pada?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "A pada is a quarter of a Nakshatra; it refines the syllable for naming and can slightly change the recommended starting sound."
-      }
-    }
-  ]
-}
 
-const ldJson = JSON.stringify(jsonLd)
-const ldFaq = JSON.stringify(faqJson)
 
 // --- Structured data (JSON-LD) with richer Person fields --------------
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
@@ -139,21 +125,7 @@ const jsonLd = {
   "itemListElement": itemListElements
 }
 
-// FAQ structured data (educational)
-},
-    {
-      "@type": "Question",
-      "name": "What is a Pada?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "A pada is a quarter of a Nakshatra; it refines the syllable for naming and can slightly change the recommended starting sound."
-      }
-    }
-  ]
-}
 
-const ldJson = JSON.stringify(jsonLd)
-const ldFaq = JSON.stringify(faqJson)
 
   return (
     <Layout title={`${nak.name} — Pada ${pada} (${selectedSyl})`} description={`${nak.name} nakshatra pada ${pada} syllable ${selectedSyl} — curated baby names`} image={ogImage}>
